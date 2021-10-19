@@ -39,6 +39,17 @@ sudo snap install node --classic
 sudo snap install spotify
 sudo snap install chromium
 
+# Dotfiles
+read -p "Do you want to setup dotfiles? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  git clone --bare https://github.com/flolu/dotfiles $HOME/dotfiles
+  git --git-dir=$HOME/dotfiles --work-tree=$HOME checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} rm $HOME/{}
+  git --git-dir=$HOME/dotfiles --work-tree=$HOME checkout
+  git --git-dir=$HOME/dotfiles --work-tree=$HOME config --local status.showUntrackedFiles no
+fi
+
 # NVIDIA drivers
 read -p "Do you want to install NVIDIA drivers? " -n 1 -r
 echo
