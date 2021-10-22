@@ -1,36 +1,56 @@
 #!/bin/bash
 
+# Upgrade
+sudo dnf upgrade -y
+
 # Clear bloatware
 sudo dnf remove -y \
-libreoffice* \
-cheese \
-rhythmbox \
-gnome-calculator \
-gnome-calendar \
-gnome-contacts \
-gnome-tour \
-gnome-maps \
-gnome-weather
+  libreoffice* \
+  cheese \
+  rhythmbox \
+  gnome-calculator \
+  gnome-calendar \
+  gnome-contacts \
+  gnome-tour \
+  gnome-maps \
+  gnome-weather
 
 # Basics
 sudo dnf install -y \
-ckb-next \
-dmenu \
-git-remote-gcrypt \
-yarnpkg \
-gnome-tweaks \
-gnome-extensions-app
+  ckb-next \
+  dmenu \
+  git-remote-gcrypt \
+  yarnpkg \
+  gnome-tweaks \
+  gnome-extensions-app
+
+# Docker
+sudo dnf install -y dnf-plugins-core
+sudo dnf config-manager \
+  --add-repo \
+  https://download.docker.com/linux/fedora/docker-ce.repo
+sudo dnf install -y \
+  docker-ce \
+  docker-ce-cli \
+  containerd.io
+if ! [ $(getent group docker) ]; then
+  sudo groupadd docker
+fi
+sudo usermod -aG docker $USER
+newgrp docker
+sudo systemctl enable docker.service
+sudo systemctl enable containerd.service
+sudo systemctl start docker
 
 # Pass
-sudo dnf install \
--y \
-pass \
-pass-otp \
-passmenu \
-xclip
+sudo dnf install -y \
+  pass \
+  pass-otp \
+  passmenu \
+  xclip
 
 # Snap
-sudo dnf install-y snapd
+sudo dnf install -y snapd
 sudo ln -s /var/lib/snapd/snap /snap
 
 # Snap apps
@@ -47,10 +67,10 @@ sudo snap install discord
 # https://github.com/obsidianmd/obsidian-releases/releases
 
 # Brave
-sudo dnf install dnf-plugins-core
+sudo dnf install -y dnf-plugins-core
 sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
 sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-sudo dnf install brave-browser
+sudo dnf install -y brave-browser
 
 # Dotfiles
 read -p "Do you want to setup dotfiles? " -n 1 -r
