@@ -38,6 +38,19 @@ sudo snap install code --classic
 sudo snap install node --classic
 sudo snap install spotify
 sudo snap install chromium
+sudo snap install obs-studio
+sudo snap install android-studio
+sudo snap install discord
+
+# Obsidian
+# TODO download and install lates snap from
+# https://github.com/obsidianmd/obsidian-releases/releases
+
+# Brave
+sudo dnf install dnf-plugins-core
+sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
+sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+sudo dnf install brave-browser
 
 # Dotfiles
 read -p "Do you want to setup dotfiles? " -n 1 -r
