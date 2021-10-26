@@ -42,6 +42,11 @@ sudo systemctl enable docker.service
 sudo systemctl enable containerd.service
 sudo systemctl start docker
 
+# Terraform
+sudo dnf install -y dnf-plugins-core
+sudo dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+sudo dnf -y install terraform
+
 # Pass
 sudo dnf install -y \
   pass \
@@ -61,6 +66,9 @@ sudo snap install chromium
 sudo snap install obs-studio
 sudo snap install android-studio
 sudo snap install discord
+sudo snap install kubectl --classic
+sudo snap alias kubectl k
+sudo snap install google-cloud-sdk --classic
 
 # Obsidian
 # TODO download and install lates snap from
