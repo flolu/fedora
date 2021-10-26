@@ -22,7 +22,8 @@ sudo dnf install -y \
   git-remote-gcrypt \
   yarnpkg \
   gnome-tweaks \
-  gnome-extensions-app
+  gnome-extensions-app \
+  youtube-dl
 
 # Docker
 sudo dnf install -y dnf-plugins-core
@@ -79,6 +80,10 @@ sudo dnf install -y dnf-plugins-core
 sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
 sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 sudo dnf install -y brave-browser
+
+# FFmpeg
+sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf install -y ffmpeg
 
 # Dotfiles
 read -p "Do you want to setup dotfiles? " -n 1 -r
