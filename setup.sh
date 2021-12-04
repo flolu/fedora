@@ -85,6 +85,10 @@ sudo dnf install -y brave-browser
 sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 sudo dnf install -y ffmpeg
 
+# VeraCrypt
+sudo dnf copr enable bgstack15/stackrpms
+sudo dnf install veracrypt
+
 # Dotfiles
 read -p "Do you want to setup dotfiles? " -n 1 -r
 echo
