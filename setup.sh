@@ -22,8 +22,12 @@ sudo dnf install -y \
   git-remote-gcrypt \
   yarnpkg \
   gnome-tweaks \
-  gnome-extensions-app \
-  youtube-dl
+  gnome-extensions-app
+
+# YouTube Download
+sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
+sudo chmod a+rx /usr/local/bin/yt-dlp
+yt-dlp -U
 
 # Docker
 sudo dnf install -y dnf-plugins-core
