@@ -1,11 +1,10 @@
 # Fedora
 
-## Usage
+## Setup
 
-- `./setup.sh`
+- `sudo ./setup.sh`
 
 ## Todo
 
-- Dotfiles
 - GNOME settings
 - GNOME extensions

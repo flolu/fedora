@@ -62,6 +62,7 @@ sudo dnf install -y \
   pass-otp \
   passmenu \
   xclip
+sudo mv passmenu-otp /usr/bin/
 echo "Pass"
 
 # Snap
