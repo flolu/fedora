@@ -24,7 +24,9 @@ sudo dnf install -y \
   git-remote-gcrypt \
   yarnpkg \
   gnome-tweaks \
-  gnome-extensions-app
+  gnome-extensions-app \
+  webp-pixbuf-loader
+
 echo "Installed basics"
 
 # YouTube Download
@@ -98,6 +100,9 @@ echo "Installed Brave"
 sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 sudo dnf install -y ffmpeg
 echo "Installed FFmpeg"
+
+# Webcam
+sudo dnf install -y gphoto2 v4l2loopback
 
 # VeraCrypt
 sudo dnf copr enable -y bgstack15/stackrpms
