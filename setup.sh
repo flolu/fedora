@@ -25,7 +25,9 @@ sudo dnf install -y \
   yarnpkg \
   gnome-tweaks \
   gnome-extensions-app \
-  webp-pixbuf-loader
+  webp-pixbuf-loader \
+  torbrowser-launcher \
+  krita
 
 echo "Installed basics"
 
@@ -103,6 +105,10 @@ echo "Installed FFmpeg"
 
 # Webcam
 sudo dnf install -y gphoto2 v4l2loopback
+
+# Raw image thumbnails
+sudo cp ./gdk-pixbuf-thumbnailer.thumbnailer /usr/share/thumbnailers
+rm -rf ~/.cache/thumbnails/*
 
 # VeraCrypt
 sudo dnf copr enable -y bgstack15/stackrpms
