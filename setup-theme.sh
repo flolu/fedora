@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Colloid gtk theme for linux
+# Colloid gtk theme
 sudo dnf install -y sassc
 git clone https://github.com/vinceliuice/Colloid-gtk-theme
 cd ./Colloid-gtk-theme
@@ -8,11 +8,12 @@ git checkout 519c2c9d2aa55122d079d10d2beddc4dea2cca0e
 ./install.sh --dest ~/.themes
 cd ..
 
-# Kora icon theme
-git clone https://github.com/bikass/kora
-cd ./kora
-git checkout af092d2e99b4fb8f83f37bf8ddc5acae43bb36dc
-cp -R ./kora ~/.icons/
+# Colloid icon theme
+sudo dnf install -y sassc
+git clone https://github.com/vinceliuice/Colloid-icon-theme
+cd ./Colloid-icon-theme
+git checkout 94253e63401df7b8073ca65f6d8cdba0f36cd0bb
+./install.sh
 cd ..
 
 # Bibata Cursor
