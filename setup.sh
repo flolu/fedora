@@ -94,6 +94,7 @@ echo "Installed snap apps"
 # Obsidian
 # TODO download and install lates snap from
 # https://github.com/obsidianmd/obsidian-releases/releases
+# TODO download obsidian vault if not already present in ~/Documents/obsidian
 
 # Brave
 sudo dnf install -y dnf-plugins-core

@@ -7,4 +7,5 @@
 
 ## Sync
 
-- `sudo ./sync.sh`
+- `sudo ./sync-upload.sh`
+- `sudo ./sync-download.sh`
