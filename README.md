@@ -3,8 +3,8 @@
 ## Setup
 
 - `sudo ./setup.sh`
+- `sudo ./setup-theme.sh`
 
-## Todo
+## Sync
 
-- GNOME settings
-- GNOME extensions
+- `sudo ./sync.sh`

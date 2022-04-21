@@ -13,8 +13,7 @@ sudo dnf remove -y \
   gnome-calendar \
   gnome-contacts \
   gnome-tour \
-  gnome-maps \
-  gnome-weather
+  gnome-maps
 echo "Cleared bloatware"
 
 # Basics
@@ -22,7 +21,6 @@ sudo dnf install -y \
   ckb-next \
   dmenu \
   git-remote-gcrypt \
-  yarnpkg \
   gnome-tweaks \
   gnome-extensions-app \
   webp-pixbuf-loader \
@@ -37,6 +35,8 @@ sudo chmod a+rx /usr/local/bin/yt-dlp
 sudo cp yt-dlp.conf /etc/yt-dlp.conf
 sudo yt-dlp -U
 echo "Installed yt-dlp"
+
+# Spotify Download
 
 # Docker
 sudo dnf install -y dnf-plugins-core
@@ -60,6 +60,10 @@ sudo dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/has
 sudo dnf -y install terraform
 echo "Terraform"
 
+# Node.js
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+nvm install --lts
+
 # Pass
 sudo dnf install -y \
   pass \
@@ -76,7 +80,7 @@ echo "Installed snap"
 
 # Snap apps
 sudo snap install code --classic
-sudo snap install node --classic
+# sudo snap install node --classic
 sudo snap install spotify
 sudo snap install chromium
 sudo snap install obs-studio
