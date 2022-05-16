@@ -4,6 +4,11 @@
 sudo dnf upgrade -y
 echo "Upgrade successfull"
 
+# Configure git
+git config --global credential.helper store
+git config --global user.name "flolu"
+git config --global user.email "loflude@gmail.com"
+
 # Clear bloatware
 sudo dnf remove -y \
   libreoffice* \

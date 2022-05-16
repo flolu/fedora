@@ -26,7 +26,7 @@ pass git push
 # Obsidian vault
 cd ~/Documents/obsidian
 obsidian_diff=$(git diff --name-only)
-if [ "$dot_diff" != "" ];then
+if [ "$obsidian_diff" != "" ];then
   git add .
   git commit -m "$commit_message"
 fi
