@@ -8,5 +8,5 @@ $git_dot_alias pull
 pass git pull
 
 # Obsidian vault
-cd ~/Documents/obsidian
+cd ~/Desktop/obsidian
 git pull

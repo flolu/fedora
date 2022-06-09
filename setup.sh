@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [[ $USER == "root" ]]
+then
+  echo "Please execute ./setup without sudo!"
+  exit 1
+fi
+
 # Upgrade
 sudo dnf upgrade -y
 echo "Upgrade successfull"
@@ -11,18 +17,6 @@ git config --global user.email "loflude@gmail.com"
 git config --global commit.gpgsign true
 git config --global user.signingkey 2BF2E9B3FB1972D8
 
-# Clear bloatware
-# sudo dnf remove -y \
-#   libreoffice* \
-#   cheese \
-#   rhythmbox \
-#   gnome-calculator \
-#   gnome-calendar \
-#   gnome-contacts \
-#   gnome-tour \
-#   gnome-maps
-# echo "Cleared bloatware"
-
 # Basics
 sudo dnf install -y \
   ckb-next \
@@ -30,21 +24,19 @@ sudo dnf install -y \
   git-remote-gcrypt \
   gnome-tweaks \
   gnome-extensions-app \
-  webp-pixbuf-loader # \
-  # torbrowser-launcher \
-  # krita
-
+  webp-pixbuf-loader
+sudo dnf install -y python3-pip
 echo "Installed basics"
 
-# YouTube Download
-# TODO install with pip
-# sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
-# sudo chmod a+rx /usr/local/bin/yt-dlp
-# sudo cp yt-dlp.conf /etc/yt-dlp.conf
-# sudo yt-dlp -U
-# echo "Installed yt-dlp"
+# GitHub CLI
+if [[ "$(gh auth status 2>&1)" =~ "You are not logged into any GitHub hosts" ]]
+then
+  gh auth login --git-protocol https --hostname github.com --web
+fi
 
-# Spotify Download
+# YouTube Download
+python3 -m pip install -U yt-dlp
+echo "Installed yt-dlp"
 
 # Docker
 sudo dnf install -y dnf-plugins-core
@@ -71,15 +63,15 @@ echo "Terraform"
 # Node.js
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 nvm install --lts
+echo "Node.js"
 
 # Pass
 sudo dnf install -y \
   pass \
   pass-otp \
-  passmenu \
   xclip
-sudo mv passmenu-otp /usr/bin/
-echo "Pass"
+sudo mv passmenu /usr/bin/
+echo "Installed Pass"
 
 # Snap
 sudo dnf install -y snapd
@@ -98,10 +90,29 @@ sudo snap alias kubectl k
 sudo snap install google-cloud-sdk --classic
 echo "Installed snap apps"
 
+# Flatpak
+sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
 # Obsidian
-# TODO download and install lates snap from
-# https://github.com/obsidianmd/obsidian-releases/releases
-# TODO download obsidian vault if not already present in ~/Documents/obsidian
+flatpak install -y flathub md.obsidian.Obsidian
+OBSIDIAN_VAULT_DIR=~/Desktop/obsidian
+OBSIDIAN_PLUGINS_DIR=$OBSIDIAN_VAULT_DIR/.obsidian/plugins
+git clone gcrypt::https://github.com/flolu/obsidian $OBSIDIAN_VAULT_DIR
+mkdir -p $OBSIDIAN_PLUGINS_DIR
+gh release download --repo flolu/obsidian-scroll-speed --pattern '*' --dir $OBSIDIAN_PLUGINS_DIR/scroll-speed
+gh release download --repo cristianvasquez/obsidian-prettify --pattern '*' --dir $OBSIDIAN_PLUGINS_DIR/markdown-prettifier
+gh release download --repo avr/obsidian-reading-time --pattern '*' --dir $OBSIDIAN_PLUGINS_DIR/obsidian-reading-time
+gh release download --repo phibr0/obsidian-emoji-shortcodes --pattern '*' --dir $OBSIDIAN_PLUGINS_DIR/emoji-shortcodes
+gh release download --repo chrisgrieser/obsidian-smarter-md-hotkeys --pattern '*' --dir $OBSIDIAN_PLUGINS_DIR/obsidian-smarter-md-hotkeys
+gh release download --repo liamcain/obsidian-calendar-plugin --pattern '*' --dir $OBSIDIAN_PLUGINS_DIR/calendar
+gh release download --repo argenos/nldates-obsidian --pattern '*' --dir $OBSIDIAN_PLUGINS_DIR/nldates-obsidian
+gh release download --repo uphy/obsidian-reminder --pattern '*' --dir $OBSIDIAN_PLUGINS_DIR/obsidian-reminder-plugin
+gh release download --repo phibr0/cycle-through-panes --pattern '*' --dir $OBSIDIAN_PLUGINS_DIR/cycle-through-panes
+gh release download --repo deathau/sliding-panes-obsidian --pattern '*' --dir $OBSIDIAN_PLUGINS_DIR/sliding-panes-obsidian
+gh release download --repo denolehov/obsidian-url-into-selection --pattern '*' --dir $OBSIDIAN_PLUGINS_DIR/url-into-selection
+gh release download --repo vslinko/obsidian-outliner --pattern '*' --dir $OBSIDIAN_PLUGINS_DIR/obsidian-outliner
+gh release download --repo obsidian-tasks-group/obsidian-tasks --pattern '*' --dir $OBSIDIAN_PLUGINS_DIR/obsidian-tasks-plugin
+# TODO Spell checking with locally run Docker instance
 
 # Brave
 sudo dnf install -y dnf-plugins-core
@@ -156,17 +167,17 @@ fi
 echo "Dot files were successfully set up"
 
 # NVIDIA drivers
-read -p "Do you want to install NVIDIA drivers? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-  dnf install dnf-plugins-core -y
-  dnf copr enable t0xic0der/nvidia-auto-installer-for-fedora -y
-  dnf install nvautoinstall -y
-  sudo nvautoinstall rpmadd
-  sudo nvautoinstall driver
-  sudo nvautoinstall plcuda
-fi
+# read -p "Do you want to install NVIDIA drivers? " -n 1 -r
+# echo
+# if [[ $REPLY =~ ^[Yy]$ ]]
+# then
+#   dnf install dnf-plugins-core -y
+#   dnf copr enable t0xic0der/nvidia-auto-installer-for-fedora -y
+#   dnf install nvautoinstall -y
+#   sudo nvautoinstall rpmadd
+#   sudo nvautoinstall driver
+#   sudo nvautoinstall plcuda
+# fi
 
 # Finish
 read -p "Restart now? " -n 1 -r

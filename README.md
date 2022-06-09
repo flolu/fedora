@@ -2,10 +2,10 @@
 
 ## Setup
 
-- `sudo ./setup.sh`
+- `./setup.sh`
 - `sudo ./setup-theme.sh`
 
 ## Sync
 
-- `sudo ./sync-upload.sh`
-- `sudo ./sync-download.sh`
+- `./sync-upload.sh`
+- `./sync-download.sh`
