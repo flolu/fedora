@@ -30,6 +30,7 @@ sudo dnf install -y python3-pip
 echo "Installed basics"
 
 # GitHub CLI
+sudo dnf install -y gh
 if [[ "$(gh auth status 2>&1)" =~ "You are not logged into any GitHub hosts" ]]
 then
   gh auth login --git-protocol https --hostname github.com --web
@@ -71,7 +72,7 @@ sudo dnf install -y \
   pass \
   pass-otp \
   xclip
-sudo mv passmenu /usr/bin/
+sudo cp passmenu /usr/bin/
 echo "Installed Pass"
 
 # Snap
@@ -87,13 +88,20 @@ sudo snap install obs-studio
 sudo snap install kubectl --classic
 sudo snap alias kubectl k
 sudo snap install google-cloud-sdk --classic
+sudo snap install blender --classic
+sudo snap install telegram-desktop
 echo "Installed snap apps"
 
-# Flatpak
-sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+# Session Messenger
+gh release download --repo oxen-io/session-desktop --pattern 'session-desktop-linux-x86_64-*.rpm' --dir $HOME/Downloads/
+sudo dnf install -y $HOME/Downloads/session-desktop-linux-x86_64-*.rpm
+rm $HOME/Downloads/session-desktop-linux-x86_64-*.rpm
 
 # Obsidian
-flatpak install -y flathub md.obsidian.Obsidian
+gh release download --repo obsidianmd/obsidian-releases --pattern 'obsidian_*_amd64.snap' --dir $HOME/Downloads/
+OBSIDIAN_SNAP_FILE=$(ls $HOME/Downloads/obsidian_*_amd64.snap | head -1 2>&1)
+sudo snap install --dangerous $OBSIDIAN_SNAP_FILE
+rm $OBSIDIAN_SNAP_FILE
 OBSIDIAN_VAULT_DIR=~/Desktop/obsidian
 OBSIDIAN_PLUGINS_DIR=$OBSIDIAN_VAULT_DIR/.obsidian/plugins
 git clone gcrypt::https://github.com/flolu/obsidian $OBSIDIAN_VAULT_DIR
@@ -112,6 +120,7 @@ gh release download --repo denolehov/obsidian-url-into-selection --pattern '*' -
 gh release download --repo vslinko/obsidian-outliner --pattern '*' --dir $OBSIDIAN_PLUGINS_DIR/obsidian-outliner
 gh release download --repo obsidian-tasks-group/obsidian-tasks --pattern '*' --dir $OBSIDIAN_PLUGINS_DIR/obsidian-tasks-plugin
 # TODO Spell checking with locally run Docker instance
+# https://github.com/obsidianmd/obsidian-releases/releases
 
 # Brave
 sudo dnf install -y dnf-plugins-core
