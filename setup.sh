@@ -8,6 +8,8 @@ echo "Upgrade successfull"
 git config --global credential.helper store
 git config --global user.name "flolu"
 git config --global user.email "loflude@gmail.com"
+git config --global commit.gpgsign true
+git config --global user.signingkey 2BF2E9B3FB1972D8
 
 # Clear bloatware
 sudo dnf remove -y \
@@ -161,8 +163,9 @@ then
   dnf install dnf-plugins-core -y
   dnf copr enable t0xic0der/nvidia-auto-installer-for-fedora -y
   dnf install nvautoinstall -y
-  sudo nvautoinstall --rpmadd
-  sudo nvautoinstall --driver
+  sudo nvautoinstall rpmadd
+  sudo nvautoinstall driver
+  # sudo nvautoinstall plcuda
 fi
 
 # Finish
