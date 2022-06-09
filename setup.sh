@@ -12,16 +12,16 @@ git config --global commit.gpgsign true
 git config --global user.signingkey 2BF2E9B3FB1972D8
 
 # Clear bloatware
-sudo dnf remove -y \
-  libreoffice* \
-  cheese \
-  rhythmbox \
-  gnome-calculator \
-  gnome-calendar \
-  gnome-contacts \
-  gnome-tour \
-  gnome-maps
-echo "Cleared bloatware"
+# sudo dnf remove -y \
+#   libreoffice* \
+#   cheese \
+#   rhythmbox \
+#   gnome-calculator \
+#   gnome-calendar \
+#   gnome-contacts \
+#   gnome-tour \
+#   gnome-maps
+# echo "Cleared bloatware"
 
 # Basics
 sudo dnf install -y \
@@ -30,18 +30,19 @@ sudo dnf install -y \
   git-remote-gcrypt \
   gnome-tweaks \
   gnome-extensions-app \
-  webp-pixbuf-loader \
-  torbrowser-launcher \
-  krita
+  webp-pixbuf-loader # \
+  # torbrowser-launcher \
+  # krita
 
 echo "Installed basics"
 
 # YouTube Download
-sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
-sudo chmod a+rx /usr/local/bin/yt-dlp
-sudo cp yt-dlp.conf /etc/yt-dlp.conf
-sudo yt-dlp -U
-echo "Installed yt-dlp"
+# TODO install with pip
+# sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
+# sudo chmod a+rx /usr/local/bin/yt-dlp
+# sudo cp yt-dlp.conf /etc/yt-dlp.conf
+# sudo yt-dlp -U
+# echo "Installed yt-dlp"
 
 # Spotify Download
 
@@ -87,7 +88,6 @@ echo "Installed snap"
 
 # Snap apps
 sudo snap install code --classic
-# sudo snap install node --classic
 sudo snap install spotify
 sudo snap install chromium
 sudo snap install obs-studio
@@ -111,37 +111,37 @@ sudo dnf install -y brave-browser
 echo "Installed Brave"
 
 # FFmpeg
-sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-sudo dnf install -y ffmpeg
-echo "Installed FFmpeg"
+# sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+# sudo dnf install -y ffmpeg
+# echo "Installed FFmpeg"
 
 # Webcam
-sudo dnf install -y gphoto2 v4l2loopback
+# sudo dnf install -y gphoto2 v4l2loopback
 
 # Raw image thumbnails
 sudo cp ./gdk-pixbuf-thumbnailer.thumbnailer /usr/share/thumbnailers
 rm -rf ~/.cache/thumbnails/*
 
 # VeraCrypt
-sudo dnf copr enable -y bgstack15/stackrpms
-sudo dnf install -y veracrypt
-echo "Installed VeraCrypt"
+# sudo dnf copr enable -y bgstack15/stackrpms
+# sudo dnf install -y veracrypt
+# echo "Installed VeraCrypt"
 
 # Tor
-sudo dnf install -y tor privoxy
-sudo service tor start
-sudo systemctl enable tor
-sudo cp privoxy.config /etc/privoxy/config
-sudo service privoxy start
-sudo systemctl enable privoxy
-gsettings set org.gnome.system.proxy mode 'manual' # 'none' to turn off
-gsettings set org.gnome.system.proxy.http host 'localhost'
-gsettings set org.gnome.system.proxy.http port '8118'
-gsettings set org.gnome.system.proxy.https host 'localhost'
-gsettings set org.gnome.system.proxy.https port '8118'
-gsettings set org.gnome.system.proxy.socks host 'localhost'
-gsettings set org.gnome.system.proxy.socks port '9050'
-echo "Installed Tor"
+# sudo dnf install -y tor privoxy
+# sudo service tor start
+# sudo systemctl enable tor
+# sudo cp privoxy.config /etc/privoxy/config
+# sudo service privoxy start
+# sudo systemctl enable privoxy
+# gsettings set org.gnome.system.proxy mode 'manual' # 'none' to turn off
+# gsettings set org.gnome.system.proxy.http host 'localhost'
+# gsettings set org.gnome.system.proxy.http port '8118'
+# gsettings set org.gnome.system.proxy.https host 'localhost'
+# gsettings set org.gnome.system.proxy.https port '8118'
+# gsettings set org.gnome.system.proxy.socks host 'localhost'
+# gsettings set org.gnome.system.proxy.socks port '9050'
+# echo "Installed Tor"
 
 # Dotfiles
 read -p "Do you want to setup dotfiles? " -n 1 -r
@@ -165,7 +165,7 @@ then
   dnf install nvautoinstall -y
   sudo nvautoinstall rpmadd
   sudo nvautoinstall driver
-  # sudo nvautoinstall plcuda
+  sudo nvautoinstall plcuda
 fi
 
 # Finish
