@@ -24,7 +24,8 @@ sudo dnf install -y \
   git-remote-gcrypt \
   gnome-tweaks \
   gnome-extensions-app \
-  webp-pixbuf-loader
+  webp-pixbuf-loader \
+  timeshift
 sudo dnf install -y python3-pip
 echo "Installed basics"
 
@@ -83,8 +84,6 @@ sudo snap install code --classic
 sudo snap install spotify
 sudo snap install chromium
 sudo snap install obs-studio
-sudo snap install android-studio
-sudo snap install discord
 sudo snap install kubectl --classic
 sudo snap alias kubectl k
 sudo snap install google-cloud-sdk --classic
@@ -167,17 +166,9 @@ fi
 echo "Dot files were successfully set up"
 
 # NVIDIA drivers
-# read -p "Do you want to install NVIDIA drivers? " -n 1 -r
-# echo
-# if [[ $REPLY =~ ^[Yy]$ ]]
-# then
-#   dnf install dnf-plugins-core -y
-#   dnf copr enable t0xic0der/nvidia-auto-installer-for-fedora -y
-#   dnf install nvautoinstall -y
-#   sudo nvautoinstall rpmadd
-#   sudo nvautoinstall driver
-#   sudo nvautoinstall plcuda
-# fi
+sudo dnf install -y akmod-nvidia
+sudo dnf install -y xorg-x11-drv-nvidia-cuda
+sed -i -e 's/#WaylandEnable=false.*/WaylandEnable=false/' custom.conf
 
 # Finish
 read -p "Restart now? " -n 1 -r

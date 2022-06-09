@@ -29,6 +29,8 @@ $git_dot_alias push origin master
 # Password store
 pass git push
 
+# TODO copy password-store to USB
+
 # Obsidian vault
 cd ~/Desktop/obsidian
 obsidian_diff=$(git diff --name-only)
