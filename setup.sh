@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Applications directory
+APPLICATIONS_DIR=$HOME/Applications
+mkdir -p $APPLICATIONS_DIR
+
 if [[ $USER == "root" ]]
 then
   echo "Please execute ./setup without sudo!"
@@ -65,6 +69,7 @@ echo "Terraform"
 # Node.js
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 nvm install --lts
+npm install -g npm
 echo "Node.js"
 
 # Pass
@@ -132,10 +137,40 @@ sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 sudo dnf install -y brave-browser
 echo "Installed Brave"
 
-# Monero
-# https://downloads.getmonero.org/cli/monero-linux-x64-v0.17.3.2.tar.bz2
+# Ledger Live
+LEDGER_LIVE_APPIMAGE=$APPLICATIONS_DIR/ledger-live-desktop-linux-x86_64.AppImage
+wget -o $LEDGER_LIVE_APPIMAGE https://download.live.ledger.com/latest/linux
+chmod a+x $
+alias ledger-live-desktop="./$LEDGER_LIVE_APPIMAGE"
+
+# Ledger Live
+mkdir -p $HOME/Applications
+LEDGER_LIVE_APPIMAGE=$HOME/Applications/ledger-live-desktop-linux-x86_64.AppImage
+wget -O $LEDGER_LIVE_APPIMAGE https://download.live.ledger.com/latest/linux
+chmod a+x $LEDGER_LIVE_APPIMAGE
+# https://support.ledger.com/hc/en-us/articles/115005165269-Fix-connection-issues?support=true
+wget -q -O - https://raw.githubusercontent.com/LedgerHQ/udev-rules/master/add_udev_rules.sh | sudo bash
+
+LEDGER_LIVE_DESKTOP_FILE=$HOME/.local/share/applications/ledger-live.desktop
+touch $LEDGER_LIVE_DESKTOP_FILE
+cat > $LEDGER_LIVE_DESKTOP_FILE << EOF
+[Desktop Entry]
+Type=Application
+Name=Ledger Live
+Exec="$LEDGER_LIVE_APPIMAGE"
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+EOF
+
+# Monero GUI
 flatpak install -y flathub org.getmonero.Monero
-# flatpak run org.getmonero.Monero
+sudo flatpak override org.getmonero.Monero --filesystem=$HOME
+
+# Monero Mining
+git clone https://github.com/hinto-janaiyo/monero-bash &&
+cd monero-bash &&
+./monero-bash
 
 # LaTeX
 sudo dnf install -y texlive-scheme-full
@@ -144,9 +179,6 @@ sudo dnf install -y texlive-scheme-full
 # sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 # sudo dnf install -y ffmpeg
 # echo "Installed FFmpeg"
-
-# Webcam
-# sudo dnf install -y gphoto2 v4l2loopback
 
 # Raw image thumbnails
 sudo cp ./gdk-pixbuf-thumbnailer.thumbnailer /usr/share/thumbnailers
