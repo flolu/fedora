@@ -75,6 +75,9 @@ sudo dnf install -y \
 sudo cp passmenu /usr/bin/
 echo "Installed Pass"
 
+# Flatpak
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
 # Snap
 sudo dnf install -y snapd
 sudo ln -s /var/lib/snapd/snap /snap
@@ -128,6 +131,14 @@ sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.co
 sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 sudo dnf install -y brave-browser
 echo "Installed Brave"
+
+# Monero
+# https://downloads.getmonero.org/cli/monero-linux-x64-v0.17.3.2.tar.bz2
+flatpak install -y flathub org.getmonero.Monero
+# flatpak run org.getmonero.Monero
+
+# LaTeX
+sudo dnf install -y texlive-scheme-full
 
 # FFmpeg
 # sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
