@@ -29,7 +29,8 @@ sudo dnf install -y \
   gnome-tweaks \
   gnome-extensions-app \
   webp-pixbuf-loader \
-  timeshift
+  timeshift \
+  xdotool
 sudo dnf install -y python3-pip
 echo "Installed basics"
 
@@ -58,6 +59,7 @@ sudo systemctl enable docker.service
 sudo systemctl enable containerd.service
 sudo systemctl enable docker
 sudo systemctl start docker
+sudo dnf install -y docker-compose
 echo "Installed Docker"
 
 # Terraform
@@ -163,14 +165,27 @@ NoDisplay=false
 X-GNOME-Autostart-enabled=true
 EOF
 
+
 # Monero GUI
 flatpak install -y flathub org.getmonero.Monero
 sudo flatpak override org.getmonero.Monero --filesystem=$HOME
+
 
 # Monero Mining
 git clone https://github.com/hinto-janaiyo/monero-bash &&
 cd monero-bash &&
 ./monero-bash
+# TODO xmrig.json "max-cpu-usage": 75,
+# TODO https://github.com/xmrig/xmrig-cuda
+# Build deps
+# https://xmrig.com/docs/miner/build/fedora
+# sudo dnf install -y git make cmake gcc gcc-c++ libstdc++-static libuv-static hwloc-devel openssl-devel
+# git clone https://github.com/xmrig/xmrig-cuda
+# cd xmrig-cuda
+# mkdir build && cd build
+# # cmake .. -DCUDA_LIB=/usr/lib64/libcuda.so -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda
+# cmake .. -DCUDA_LIB=/usr/lib64/libcuda.so
+# make -j$(nproc)
 
 # LaTeX
 sudo dnf install -y texlive-scheme-full
@@ -218,6 +233,7 @@ fi
 echo "Dot files were successfully set up"
 
 # NVIDIA drivers
+# https://rpmfusion.org/Howto/NVIDIA
 sudo dnf install -y akmod-nvidia
 sudo dnf install -y xorg-x11-drv-nvidia-cuda
 sed -i -e 's/#WaylandEnable=false.*/WaylandEnable=false/' custom.conf
