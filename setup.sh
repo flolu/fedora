@@ -29,17 +29,9 @@ sudo dnf install -y \
   gnome-tweaks \
   gnome-extensions-app \
   webp-pixbuf-loader \
-  timeshift \
   xdotool
 sudo dnf install -y python3-pip
 echo "Installed basics"
-
-# GitHub CLI
-sudo dnf install -y gh
-if [[ "$(gh auth status 2>&1)" =~ "You are not logged into any GitHub hosts" ]]
-then
-  gh auth login --git-protocol https --hostname github.com --web
-fi
 
 # YouTube Download
 python3 -m pip install -U yt-dlp
@@ -165,11 +157,9 @@ NoDisplay=false
 X-GNOME-Autostart-enabled=true
 EOF
 
-
 # Monero GUI
 flatpak install -y flathub org.getmonero.Monero
 sudo flatpak override org.getmonero.Monero --filesystem=$HOME
-
 
 # Monero Mining
 git clone https://github.com/hinto-janaiyo/monero-bash &&
@@ -188,7 +178,16 @@ cd monero-bash &&
 # make -j$(nproc)
 
 # LaTeX
-sudo dnf install -y texlive-scheme-full
+# https://fedoraproject.org/wiki/Features/TeXLive#Benefit_to_Fedora
+sudo dnf install -y texlive-scheme-basic
+
+# GitHub CLI
+sudo dnf install -y gh
+if [[ "$(gh auth status 2>&1)" =~ "You are not logged into any GitHub hosts" ]]
+then
+  gh auth login --git-protocol https --hostname github.com --web
+fi
+
 
 # FFmpeg
 # sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
@@ -236,7 +235,7 @@ echo "Dot files were successfully set up"
 # https://rpmfusion.org/Howto/NVIDIA
 sudo dnf install -y akmod-nvidia
 sudo dnf install -y xorg-x11-drv-nvidia-cuda
-sed -i -e 's/#WaylandEnable=false.*/WaylandEnable=false/' custom.conf
+sudo sed -i -e 's/#WaylandEnable=false.*/WaylandEnable=false/' /etc/gdm/custom.conf
 
 # Finish
 read -p "Restart now? " -n 1 -r
