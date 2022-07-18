@@ -63,7 +63,8 @@ echo "Terraform"
 # Node.js
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 nvm install --lts
-npm install -g npm
+sudo dnf install -y npm
+# npm install -g npm
 echo "Node.js"
 
 # Pass
